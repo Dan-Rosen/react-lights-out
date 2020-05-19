@@ -40,6 +40,15 @@ class Board extends Component {
                 board[y][x] = !board[y][x]
             }
         }
+
+        flipCell(y, x)
+        flipCell(y, x - 1)
+        flipCell(y, x + 1)
+        flipCell(y - 1, x)
+        flipCell(y + 1, x)
+
+        let hasWon = false
+        this.setState({ board, hasWon })
     }
 
     render() {
@@ -48,7 +57,13 @@ class Board extends Component {
             let row = []
             for (let x = 0; x < this.props.ncols; x++) {
                 let coord = `${y}-${x}`
-                row.push(<Cell key={coord} isLit={this.state.board[y][x]} />)
+                row.push(
+                    <Cell
+                        key={coord}
+                        isLit={this.state.board[y][x]}
+                        flipCellsAroundMe={() => this.flipCellsAround(coord)}
+                    />
+                )
             }
             tblBoard.push(<tr>{row}</tr>)
         }
